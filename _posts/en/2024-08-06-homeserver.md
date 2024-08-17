@@ -60,7 +60,7 @@ In other word, thanks to Caddy, I can access my services directly by using subdo
 
 With this setup, the only port I have to expose one port (443) to internet, and everything is always encrypted.
 
-I also added a DynDNS plugin to Caddy, in order to always have access to my homeserver via my domain name even when my internet service provider attributes me a dynamic IP.
+I also added a dynamic DNS plugin to Caddy, in order to sync my IP server adress with my domain name provider. So even if my internet service provider attributes me a dynamic IP, I can always have access to my homeserver via my domain name.
 
 To improve even more the security, I also use a service called Crowdsec to detect peers with malicious behaviors and block them for accessing my server. Crowdsec analyses the Caddy logs and if its behavior engine detects one of the configured scenario, it will blocks the IP at a firewall level. The avantage of Crowdsec over the other similar services available (Fail2ban for example), is that it offers a collobarative solution. Indeed, when a Crowdsec user blocks an aggressive IP, it is also shared among all users to further improve everyone's security.
 
@@ -68,17 +68,19 @@ To improve even more the security, I also use a service called Crowdsec to detec
 
 I also have Watchtower to always keep all my services updated to always benifits from the latest security fix and features. Every night, it downloads the latest versions and replace them if an update is available.
 
-And because sometimes an update can fail or, worse, the storage drive can be corrupted, I also have a service to do a periodic backup. Every night, it will save all the server configurations and some data in a encrypted archive file. This archive is then saved on my 1 TO harddrive and to a AWS cloud storage server. A retention policy of 7 days make sure to always remove the oldest backup archives.
+And because sometimes an update or a storage drive can fail, I use a service to do a periodic backup. Every night, it will save all the server configurations and some data in a encrypted archive file. This archive is then saved on my 1 TO harddrive and to a AWS cloud storage server. A retention policy of 7 days make sure to not bloat the backup storage by removing the oldest backup archives.
 
 ## Monitoring
 
 With multiples services running, I need to have a way to monitor them and receive notification when an issue is detected. That's why I use Portainer and Homepage.
 
-Portainer allows to directly manage docker containers via graphical interface. Even though I prefer to always use Docker Compose to deploy new service, I still use Portainer to monitor the health status of my already existing services. When needed, I can also easely restart them from the Portainer UI.
+Portainer allows to directly manage docker containers via a graphical interface. Even though I prefer to always use Docker Compose to deploy new service, I still use Portainer to monitor the health status of my already existing services. When needed, I can also easely restart them from the Portainer UI.
 
 Homepage, is an highly customizable dashboard. It proposes widgets for a large choice of services, and can display differents system metrics (uptime, disk space, server temperature, ...). It is a fancy way to access my differents services.
 
 TODO IMAGE HOMEPAGE
+
+To be alerted in case of errors, my services are sending messages on a private Discord server.
 
 ## Other services
 
@@ -87,5 +89,4 @@ Like you can see on the previous image,  the following services are also running
 - **Paperless-ngx** : Document management and storage system
 - **Nextcloud** : Cloud storage service
 - **QBitorrent** : Torrent client
-- And more I will not talk about here
-
+- And more...
