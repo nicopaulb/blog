@@ -1,7 +1,7 @@
 ---
 title: 'Home Server : My self-hosted services'
 description: Discover how I host multiples services on my own server
-date: {}
+date: 2022-02-03
 categories: []
 media_subpath: /assets/img/posts/homeserver
 tags: []
