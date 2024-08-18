@@ -14,7 +14,8 @@ In a world, where we are more and more dependent to the cloud and large corporat
 
 My self-hosted addiction first started with a Raspberry PI and the PI-Hole application to filter all advertisement and tracking in my network at a DNS level. I used it like that for almost a year, but then I wanted to have more. 
 
-IMAGE PIHOLE RPI
+![PI-Hole](pihole.png){: w="400" h="150"}
+_PI Hole_
 
 The first service I wanted to add was a media server. The most popular at that time was Plex. 
 So I connected a 1 TO hard drive to store the medias and tried to install and configure Plex Server. It was relatively easy to set up but after using it for some times, I encountered some issues. 
@@ -68,7 +69,11 @@ To improve even more the security, I also use a service called Crowdsec to detec
 
 I also have Watchtower to always keep all my services updated to always benifits from the latest security fix and features. Every night, it downloads the latest versions and replace them if an update is available.
 
-And because sometimes an update or a storage drive can fail, I use a service to do a periodic backup. Every night, it will save all the server configurations and some data in a encrypted archive file. This archive is then saved on my 1 TO harddrive and to a AWS cloud storage server. A retention policy of 7 days make sure to not bloat the backup storage by removing the oldest backup archives.
+And because sometimes an update or a storage drive can fail, I use a service to do a periodic backup. Every night, it will save all the server configurations and some data in an encrypted archive file. This archive is then saved on my 1 TO harddrive and to an AWS cloud storage server. A retention policy of 7 days make sure to not bloat the backup storage by removing the oldest backup archives.
+
+> Find the docker-volume-backup service here : [https://github.com/offen/docker-volume-backup](https://github.com/offen/docker-volume-backup).
+{: .prompt-tip }
+
 
 ## Monitoring
 
@@ -76,15 +81,19 @@ With multiples services running, I need to have a way to monitor them and receiv
 
 Portainer allows to directly manage docker containers via a graphical interface. Even though I prefer to always use Docker Compose to deploy new service, I still use Portainer to monitor the health status of my already existing services. When needed, I can also easely restart them from the Portainer UI.
 
-Homepage, is an highly customizable dashboard. It proposes widgets for a large choice of services, and can display differents system metrics (uptime, disk space, server temperature, ...). It is a fancy way to access my differents services.
+Homepage, is a highly customizable dashboard. It proposes widgets for a large choice of services, and can display differents system metrics (uptime, disk space, server temperature, ...). I use it as a quick way to access my differents services.
 
-TODO IMAGE HOMEPAGE
+![Homepage example](homepage.png){: w="400" h="150"}
+_Homepage example (not mine)_
+
+> Find the homepage service here : [https://github.com/gethomepage/homepage](https://github.com/gethomepage/homepage).
+{: .prompt-tip }
 
 To be alerted in case of errors, my services are sending messages on a private Discord server.
 
 ## Other services
 
-Like you can see on the previous image,  the following services are also running :
+Like you can see on the previous image, the following services are also running :
 - **Jellyfin** : Media server I use instead of Plex.
 - **Paperless-ngx** : Document management and storage system
 - **Nextcloud** : Cloud storage service
