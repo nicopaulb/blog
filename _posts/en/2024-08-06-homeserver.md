@@ -32,7 +32,7 @@ Docker is a platform designed to run software inside a container. Containers are
 ![Docker](docker.png){: w="400" h="150"}
 _Docker_
 
-For those reasons, using Docker is an ideal choice and it becomes trivial to manage multiples services running on the same server and not think about dependencies, incompatibilities, etc...
+For those reasons, using Docker is an ideal choice, and it becomes trivial to manage multiples services running on the same server and not think about dependencies, incompatibilities, etc...
 
 Also, I define all my container configuration in YAML files by using Docker Compose. This way all the server configurations can be easily backed up and updated.
 
@@ -40,7 +40,8 @@ Also, I define all my container configuration in YAML files by using Docker Comp
 
 With more and more services and my RPI inability to decode some large media, I choose to buy a more powerful hardware. I found a Lenovo Thinkstation on the second hand market (which is often flooded with old enterprise hardware). It is a lot cheaper than a real server and is largely enough for my use.
 
-IMAGE SERVER
+![Lenovo Thinkstation](lenovo.png){: w="400" h="150"}
+_Lenovo Thinkstation_
 
 For the OS, I installed the latest stable Debian release (headless version) to have a solid fundation and still have compatibility with most software.
 
@@ -63,7 +64,7 @@ With this setup, the only port I have to expose one port (443) to internet, and 
 
 I also added a dynamic DNS plugin to Caddy, in order to sync my IP server adress with my domain name provider. So even if my internet service provider attributes me a dynamic IP, I can always have access to my homeserver via my domain name.
 
-To improve even more the security, I also use a service called Crowdsec to detect peers with malicious behaviors and block them for accessing my server. Crowdsec analyses the Caddy logs and if its behavior engine detects one of the configured scenario, it will blocks the IP at a firewall level. The avantage of Crowdsec over the other similar services available (Fail2ban for example), is that it offers a collobarative solution. Indeed, when a Crowdsec user blocks an aggressive IP, it is also shared among all users to further improve everyone's security.
+To improve even more the security, I also use a service called Crowdsec to detect peers with malicious behaviors and block them for accessing my server. Crowdsec analyses the Caddy logs and if its behavior engine detects one of the configured scenario, it will block the IP at a firewall level. The avantage of Crowdsec over the other similar services available (Fail2ban for example), is that it offers a collobarative solution. Indeed, when a Crowdsec user blocks an aggressive IP, it is also shared among all users to further improve everyone's security.
 
 ## Update and backup
 
