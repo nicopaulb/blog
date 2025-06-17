@@ -10,19 +10,43 @@ image:
     path: garmin_screen.png
 ---
 
+A year after my last Bus Tracker project for bus in Toulouse, I moved to Belgium and decided to create a similar tool but for Garmin watches. 
+I personnaly wear a Forunner 245 and always wanted to be able to know exactly when the bus is coming to pick me up.
+So I created this app to track all DeLijn buses in Flanders and display the time of arrival of the next bus.
+
 # DeLijn Bus Data API
 
-Create API Key
+The first step was to get access to the DeLijn API to receive all the realtime bus information.
+Fortunately, it is free to use and only require to create an account on the [De Lijn Open Data portal](https://data.delijn.be/).
+
+Once my keys in hand, DeLijn provided three differents APIs :
+- GTFS Static :  Standart API to get static public transport info
+- GTFS Realtime : Standart API to get realtime public transport info
+- Open Data Services : Custom API to get realtime and static public transport info
+
+So from this brief description, you can deduce that to get realtime information, it is possible to use either the GTFS Realtime or the Open Data Services API. 
+But before telling you which one I choose to use, let's take a look at the difference between the two APIs.
 
 ## GTFS
 
-Standart API to get public transport info
-Used by Google Maps, Apple Maps, and all aggregate service for public transport
+General Transit Feed Specification (GTFS) is a standard format for public transport schedules created by Google in 2005. Initially created to incorporate transit data into Google Maps, it has since been adopted by most other navigation services (Apple Maps, Moovit, ...) and public transit services.
+It allows transit agencies to publish their schedule, route, and stop data in a format that navigation services can easaly integrate.
 
-## Custom API
+A GTFS feed is a collection of files that describe the public transport network, including routes, stops, and schedules. However a GTFS feed is not enough to get realtime information because it contains only the static/planned schedules and not the realtime delays or trip updates.
 
-Lot easier to use but not standart/universal
-Ok for my use case
+To have this additional realtime information, you need to fetch another feed, GTFS-RT (GTFS Realtime), which is an extension of GTFS. This feed will contains only relative delays for each trip and not the absolute arrival time. So you need to combine the results of both GTFS APIs to compute the absolute arrival/departure time of public transport vehicles.
+
+See [GTFS official website](https://gtfs.org) for more information.
+
+## Open Data Services
+
+The Open Data Services API is a custom API by DeLijn that provides realtime and static public transport information. It is not standart but offers the same information as the GTFS APIs in a JSON format and does not require to make additional requests to fetch the realtime information.
+
+See [DeLijn Data website](https://data.delijn.be/product#product=5978abf6e8b4390cc83196ad) for more information.
+
+
+
+On a embedded environnement with limited memory and processing power, the Open Data Services API seems to me the best choice. The response being a JSON object, it can be easely parsed and does not require to navigate between differents files and execute differents HTTP requests like the GTFS APIs.
 
 # Garmin SDK and C-Monkey
 
