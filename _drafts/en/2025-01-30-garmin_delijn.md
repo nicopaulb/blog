@@ -51,18 +51,56 @@ On a embedded environnement with limited memory and processing power, the Open D
 # Garmin SDK
 
 To develop an application for a Garmin product, you have to use the Garmin [Connect IQ SDK](https://developer.garmin.com/connect-iq/overview/).
-
+The SDK allows to build native applications, widgets and data fields for all Garmin smartwatches. 
 
 ## C-Monkey
 
-How to develop using Garmin SDK
-C-Monkey Language
-Simulator
-Permission
-Settings
+Garmin developed its own programming language called *Monkey C* to use the SDK. The syntax is derived from C, Java, Javascript, and is quite easy to understand.
+
+IMAGE MONKEY C
+
+> See [Garmin Monkey C](https://developer.garmin.com/connect-iq/monkey-c/) for more information.
+{: .prompt-tip }
+
+One of the first thing I made is to install the official Monkey C language support extension for VS Code. As well as offering syntax highlighting and code completion, it also ease the creation of a new project by providing a few useful commands (build, open samples, open SDK manager, ...).
+
+## Emulator
+
+The SDK manager also comes with a device emulators to directly run the application from the computer .
+It is quite handy to quickly run the application without having to install it on the watch or to be able to test it on differents watches.
+
+IMAGE EMULATOR
+
+
+# Application
+
+## Architecture
+The application is quite simple, it fetchs the time of arrival of the next bus from the DeLijn Open Data Services API and displays it a countdown on the watch.
+The countdown is updated every second and a new API request is made every minute or, if the refresh button is pressed, to correct the countdown if the bus is delayed or advanced. This way, the informations displayed are always up to date.
+
+IMAGE SCHEMA
+
+## Settings
+In the settings, accessible from the Connect IQ application, you can select which bus stop and bus lines you want to track. You should also set your own DeLijn API key, so you don't have to worry about rate limits.
+
+IMAGE SETTINGS
+
+The API request interval can be changed as well. 
+
+## Interface
+The countdown (in minutes) to the next bus is displayed.
+The interface can shows up to two bus stop information, one on each line.
+
+IMAGE INTERFACE
+
+> The code is available on Github here : [https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker](https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker).
+{: .prompt-tip }
 
 # Garmin Connect IQ Store
 
-How tu publish the app, install it on the watch, change settings...
+Publishing the application was quite straightforward if you compare it to a lot of others stores and platforms. Simply create an account, upload the application, update the store details and you're done.
 
-https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a
+> The Garmin application is available on the Connect IQ Store here : [https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a
+](https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a).
+{: .prompt-tip }
+
