@@ -37,14 +37,14 @@ A GTFS feed is a collection of files that describe the public transport network,
 To have this additional realtime information, you need to fetch another feed, GTFS-RT (GTFS Realtime), which is an extension of GTFS. This feed will contains only relative delays for each trip and not the absolute arrival time. So you need to combine the results of both GTFS APIs to compute the absolute arrival/departure time of public transport vehicles.
 
 > See [GTFS official website](https://gtfs.org) for more information.
-{: .prompt-tip }
+{: .prompt-info }
 
 ## Open Data Services
 
 The Open Data Services API is a custom API by DeLijn that provides realtime and static public transport information. It is not standart but offers the same information as the GTFS APIs in a JSON format and does not require to make additional requests to fetch the realtime information.
 
 > See [DeLijn Data website](https://data.delijn.be/product#product=5978abf6e8b4390cc83196ad) for more information.
-{: .prompt-tip }
+{: .prompt-info }
 
 On a embedded environnement with limited memory and processing power, the Open Data Services API seemed to me the best choice. The response being a JSON object, it can be easely parsed and does not require to navigate between differents files and execute differents HTTP requests like the GTFS APIs.
 
@@ -60,7 +60,7 @@ Garmin developed its own programming language called *Monkey C* to use the SDK. 
 IMAGE MONKEY C
 
 > See [Garmin Monkey C](https://developer.garmin.com/connect-iq/monkey-c/) for more information.
-{: .prompt-tip }
+{: .prompt-info }
 
 One of the first thing I made is to install the official Monkey C language support extension for VS Code. As well as offering syntax highlighting and code completion, it also ease the creation of a new project by providing a few useful commands (build, open samples, open SDK manager, ...).
 
