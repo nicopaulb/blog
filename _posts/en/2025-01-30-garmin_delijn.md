@@ -1,5 +1,5 @@
 ---
-title: "Garmin DeLijn Tracker : Bus tracker widget for Garmin watches"
+title: "Garmin Bus Tracker : Widget for watches"
 description: "A simple bus tracker widget compatible with Garmin watches to follow all DeLijn buses in Flanders."
 date: 2025-01-30
 categories: [Embedded]
@@ -20,9 +20,9 @@ The first step was to get access to the DeLijn API to receive all the realtime b
 Fortunately, it is free to use and only require to create an account on the [De Lijn Open Data portal](https://data.delijn.be/).
 
 Once my keys in hand, DeLijn provided three differents APIs :
-- GTFS Static :  Standart API to get static public transport info
-- GTFS Realtime : Standart API to get realtime public transport info
-- Open Data Services : Custom API to get realtime and static public transport info
+- **GTFS Static** :  Standart API to get static public transport info
+- **GTFS Realtime** : Standart API to get realtime public transport info
+- **Open Data Services** : Custom API to get realtime and static public transport info
 
 So from this brief description, you can deduce that to get realtime information, it is possible to use either the GTFS Realtime or the Open Data Services API. 
 But before telling you which one I choose to use, let's take a look at the difference between the two APIs.
@@ -55,22 +55,25 @@ The SDK allows to build native applications, widgets and data fields for all Gar
 
 ## C-Monkey
 
-Garmin developed its own programming language called *Monkey C* to use the SDK. The syntax is derived from C, Java, Javascript, and is quite easy to understand.
+Garmin developed its own programming language called **Monkey C** to use the SDK. The syntax is derived from multiple languages (C, C#, Java, Javascript, ...) and is quite easy to understand.
 
-IMAGE MONKEY C
+![Monkey C](monkeyc.png){: w="300"}
+_Monkey C_
 
 > See [Garmin Monkey C](https://developer.garmin.com/connect-iq/monkey-c/) for more information.
 {: .prompt-info }
 
-One of the first thing I made is to install the official Monkey C language support extension for VS Code. As well as offering syntax highlighting and code completion, it also ease the creation of a new project by providing a few useful commands (build, open samples, open SDK manager, ...).
+One of the first thing I made is to install the official [Monkey C language support extension for VS Code](https://marketplace.visualstudio.com/items?itemName=garmin.monkey-c). 
+
+As well as offering syntax highlighting and code completion, it also ease the interaction with the Connect IQ SKD by by providing a few useful commands (create a new project, build, open samples, open SDK manager, ...).
 
 ## Emulator
 
 The SDK manager also comes with a device emulators to directly run the application from the computer .
 It is quite handy to quickly run the application without having to install it on the watch or to be able to test it on differents watches.
 
-IMAGE EMULATOR
-
+![Garmin Emulator](emulator.png){: w="300"}
+_Garmin Emulator_
 
 # Application
 
@@ -83,7 +86,8 @@ IMAGE SCHEMA
 ## Settings
 In the settings, accessible from the Connect IQ application, you can select which bus stop and bus lines you want to track. You should also set your own DeLijn API key, so you don't have to worry about rate limits.
 
-IMAGE SETTINGS
+![App Settings](settings.png){: w="200"}
+_App Settings_
 
 The API request interval can be changed as well. 
 
