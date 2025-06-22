@@ -5,7 +5,7 @@ date: 2025-01-30
 categories: [Embedded]
 tags: [c, network, garmin, watch]
 media_subpath: /assets/img/posts/garminDeLijn
-lang: en
+lang: fr-FR
 image: 
     path: garmin_screen.png
 ---
