@@ -11,6 +11,10 @@ image:
 ---
 
 A year after my last Bus Tracker project for buses in Toulouse, I moved to Belgium and decided to create a similar tool but for Garmin watches. 
+
+> If you want to learn more about my **Bus Tracker** project, you can read more about it [here]({% post_url en/2023-02-10-bustracker %}).
+{: .prompt-tip }
+
 I personally wear a Forunner 245 and have always wanted to know exactly when the bus is coming to pick me up.
 So I created this app to track all DeLijn buses in Flanders and display the next bus's arrival time.
 

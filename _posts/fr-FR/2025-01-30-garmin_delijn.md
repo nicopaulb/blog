@@ -1,85 +1,89 @@
 ---
-title: "Garmin Bus Tracker : Widget for watches"
-description: "A simple bus tracker widget compatible with Garmin watches to follow all DeLijn buses in Flanders."
+title: "Garmin Bus Tracker : Widget pour montres"
+description: "Un widget compatible avec les montres Garmin pour suivre tous les bus DeLijn en Flandre."
 date: 2025-01-30
 categories: [Embedded]
-tags: [c, network, garmin, watch]
-media_subpath: /assets/img/posts/garminDeLijn
-lang: fr-FR
-image: 
-    path: garmin_screen.png
+tags : [c, network, garmin, watch]
+media_subpath : /assets/img/posts/garminDeLijn
+lang : fr-FR
+image : 
+    path : garmin_screen.png
 ---
 
-A year after my last Bus Tracker project for buses in Toulouse, I moved to Belgium and decided to create a similar tool but for Garmin watches. 
-I personally wear a Forunner 245 and have always wanted to know exactly when the bus is coming to pick me up.
-So I created this app to track all DeLijn buses in Flanders and display the next bus's arrival time.
+Un an après mon dernier projet Bus Tracker pour les bus à Toulouse, j'ai déménagé en Belgique et j'ai décidé de créer un outil similaire, mais pour les montres Garmin.
 
-## DeLijn Bus Data API
+> If you want to learn more about my **Bus Tracker** project, you can read more about it [here]({% post_url en/2023-02-10-bustracker %}).
+{: .prompt-tip }
 
-The first step was to get access to the DeLijn API to receive all the real-time bus information.
-Fortunately, it is free to use and only requires to create an account on the [De Lijn Open Data portal](https://data.delijn.be/).
+Je porte personnellement une Forunner 245 et j'ai toujours voulu pouvoir savoir exactement quand le bus allait venir me chercher.
+J'ai donc créé cette application pour suivre tous les bus DeLijn en Flandre et afficher l'heure d'arrivée du prochain bus.
 
-Once my keys were in hand, DeLijn provided three different APIs :
-- **GTFS Static** :  Standart API to get static public transport info
-- **GTFS Realtime** : Standart API to get real-time public transport info
-- **Open Data Services** : Custom API to get real-time and static public transport info
+## API de données de bus DeLijn
 
-So from this brief description, you can deduce that to get real-time information, it is possible to use either the GTFS Realtime or the Open Data Services API. 
-But before telling you which one I choose to use, let's take a look at the difference between the two APIs.
+La première étape a consisté à obtenir l'accès à l'API DeLijn pour recevoir toutes les informations en temps réel sur les bus.
+Heureusement, son utilisation est gratuite et il suffit de créer un compte sur le [portail De Lijn Open Data](https://data.delijn.be/).
+
+Une fois mes clés en main, DeLijn m'a fourni trois API différentes :
+- **GTFS Static** : API standard pour obtenir des informations statiques sur les transports publics
+- **GTFS Realtime** : API standard pour obtenir des informations en temps réel sur les transports publics
+- **Open Data Services** : API personnalisée pour obtenir des informations en temps réel et statiques sur les transports publics
+
+D'après cette brève description, vous pouvez déduire que pour obtenir des informations en temps réel, il est possible d'utiliser soit l'API GTFS Realtime, soit l'API Open Data Services. 
+Mais avant de vous dire laquelle j'ai choisi d'utiliser, examinons la différence entre les deux API.
 
 ### GTFS
 
-General Transit Feed Specification (GTFS) is a standard format for public transport schedules created by Google in 2005. Initially created to incorporate transit data into Google Maps, it has since been adopted by most other navigation services (Apple Maps, Moovit, ...) and public transit services.
-It allows transit agencies to publish their schedule, route, and stop data in a format that navigation services can easily integrate.
+General Transit Feed Specification (GTFS) est un format standard pour les horaires des transports publics créé par Google en 2005. Initialement créé pour intégrer les données de transport dans Google Maps, il a depuis été adopté par la plupart des autres services de navigation (Apple Maps, Moovit, ...) et services de transport public.
+Il permet aux agences de transport de publier leurs horaires, leurs itinéraires et leurs données d'arrêts dans un format que les services de navigation peuvent facilement intégrer.
 
-A GTFS feed is a collection of files that describe the public transport network, including routes, stops, and schedules. However a GTFS feed is not enough to get real-time information because it contains only the static/planned schedules and not the real-time delays or trip updates.
+Un flux GTFS est un ensemble de fichiers qui décrivent le réseau de transports publics, y compris les itinéraires, les arrêts et les horaires. Cependant, un flux GTFS ne suffit pas pour obtenir des informations en temps réel, car il ne contient que les horaires statiques/planifiés et non les retards en temps réel ou les mises à jour des trajets.
 
-To have this additional real-time information, you need to fetch another feed, GTFS-RT (GTFS Realtime), which is an extension of GTFS. This feed will contain only relative delays for each trip and not the absolute arrival time. So you need to combine the results of both GTFS APIs to compute the absolute arrival/departure time of public transport vehicles.
+Pour obtenir ces informations supplémentaires en temps réel, vous devez récupérer un autre flux, GTFS-RT (GTFS Realtime), qui est une extension de GTFS. Ce flux ne contient que les retards relatifs pour chaque trajet et non l'heure d'arrivée absolue. Vous devez donc combiner les résultats des deux API GTFS pour calculer l'heure d'arrivée/de départ absolue des véhicules de transport public.
 
-> See [GTFS official website](https://gtfs.org) for more information.
+> Pour plus d'informations, consultez le [site web officiel de GTFS](https://gtfs.org).
 {: .prompt-info }
 
-### Open Data Services
+### Services de données ouvertes
 
-The Open Data Services API is a custom API by DeLijn that provides real-time and static public transport information. It is not standard but offers the same information as the GTFS APIs in a JSON format and does not require to make additional requests to fetch the real-time information.
+L'API Open Data Services est une API personnalisée de DeLijn qui fournit des informations en temps réel et statiques sur les transports publics. Elle n'est pas standard, mais offre les mêmes informations que les API GTFS au format JSON et ne nécessite pas de requêtes supplémentaires pour récupérer les informations en temps réel.
 
-> See [DeLijn Data website](https://data.delijn.be/product#product=5978abf6e8b4390cc83196ad) for more information.
+> Pour plus d'informations, consultez le [site web DeLijn Data](https://data.delijn.be/product#product=5978abf6e8b4390cc83196ad).
 {: .prompt-info }
 
-On a embedded environnement with limited memory and processing power, the Open Data Services API seemed to be the best choice. The response being a JSON object, it can be easily parsed and does not require to navigate between different files and execute different HTTP requests like the GTFS APIs.
+Dans un environnement intégré avec une mémoire et une puissance de traitement limitées, l'API Open Data Services m'a semblé être le meilleur choix. La réponse étant un objet JSON, elle peut être facilement analysée et ne nécessite pas de naviguer entre différents fichiers et d'exécuter différentes requêtes HTTP comme les API GTFS.
 
-## Garmin SDK
+## SDK Garmin
 
-To develop an application for a Garmin product, you have to use the Garmin [Connect IQ SDK](https://developer.garmin.com/connect-iq/overview/).
-The SDK allows to build native applications, widgets and data fields for all Garmin smartwatches. 
+Pour développer une application pour un produit Garmin, vous devez utiliser le [Connect IQ SDK](https://developer.garmin.com/connect-iq/overview/) de Garmin.
+Le SDK permet de créer des applications natives, des widgets et des champs de données pour toutes les montres connectées Garmin. 
 
 ### Monkey C
 
-Garmin developed its own programming language called **Monkey C** to use the SDK. The syntax is derived from multiple languages (C, C#, Java, Javascript, ...) and is quite easy to understand.
+Garmin a développé son propre langage de programmation appelé **Monkey C** pour utiliser le SDK. La syntaxe est dérivée de plusieurs langages (C, C#, Java, Javascript, ...) et est assez facile à comprendre.
 
 ![Monkey C](monkeyc.png){: w="300"}
 _Monkey C_
 
-> See [Garmin Monkey C](https://developer.garmin.com/connect-iq/monkey-c/) for more information.
+> Pour plus d'informations, consultez [Garmin Monkey C](https://developer.garmin.com/connect-iq/monkey-c/).
 {: .prompt-info }
 
-One of the first things I made is to install the official [Monkey C language support extension for VS Code](https://marketplace.visualstudio.com/items?itemName=garmin.monkey-c). 
+L'une des premières choses que j'ai faites a été d'installer l'extension officielle [Monkey C language support extension for VS Code](https://marketplace.visualstudio.com/items?itemName=garmin.monkey-c). 
 
-As well as offering syntax highlighting and code completion, it also eases the interaction with the Connect IQ SKD by providing a few useful commands (create a new project, build, open samples, open SDK manager, ...).
+En plus d'offrir la coloration syntaxique et la complétion de code, elle facilite également l'interaction avec le Connect IQ SKD en fournissant quelques commandes utiles (créer un nouveau projet, compiler, ouvrir des exemples, ouvrir le gestionnaire SDK, ...).
 
-### Emulator
+### Émulateur
 
-The SDK manager also comes with a device emulator to directly run the application from the computer.
-It is quite handy to quickly run the application without having to install it on the watch or to be able to test it on different watches.
+Le gestionnaire SDK est également fourni avec des émulateurs de périphériques permettant d'exécuter directement l'application depuis l'ordinateur.
+Il est très pratique pour exécuter rapidement l'application sans avoir à l'installer sur la montre ou pour pouvoir la tester sur différentes montres.
 
-![Garmin Emulator](emulator.png){: w="300"}
-_Garmin Emulator_
+![Émulateur Garmin](emulator.png){: w="300"}
+_Émulateur Garmin_
 
 ## Application
 
 ### Architecture
-The application is quite simple, it fetches the time of arrival of the next bus from the DeLijn Open Data Services API and displays a countdown on the watch.
-The countdown is updated every second and a new API request is made every minute or, if the refresh button is pressed, to correct the countdown if the bus is delayed or advanced. This way, the information displayed is always up to date.
+The application is quite simple, it fetchs the time of arrival of the next bus from the DeLijn Open Data Services API and displays a countdown on the watch.
+The countdown is updated every second and a new API request is made every minute or, if the refresh button is pressed, to correct the countdown if the bus is delayed or advanced. This way, the informations displayed are always up to date.
 
 ![Architecture Diagram](schema.png){: w="300"}
 _Architecture Diagram_
@@ -93,9 +97,9 @@ _Settings_
 The API request interval can be changed as well. 
 
 ### Interface
-The countdown (in minutes) to the next bus is displayed. The interface can show up to two bus stop information, one on each line.
+The countdown (in minutes) to the next bus is displayed. The interface can shows up to two bus stop information, one on each line.
 
-The countdown color indicates if the estimated bus arrival time (based on the GPS position) is on schedule, late, or early compared to the static timetable information :
+The countdown color indicate if the estimated bus arrival time (based on the GPS position) is on schedule, late or early comparerly to the static timetable information :
 - <span style="color:purple;font-weight:bold">Purple</span> : Bus is estimated to arrive earlier than expected
 - <span style="color:green;font-weight:bold">Green</span>: Bus is on time.
 - <span style="color:red;font-weight:bold">Red</span> : Bus is estimated to arrive later than expected.
@@ -103,14 +107,13 @@ The countdown color indicates if the estimated bus arrival time (based on the GP
 ![Interface](interface.png){: w="200"}
 _Interface_
 
-> The code is available on Github here : [https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker](https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker).
+> The code is available on Github here : [https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker](https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker).
 {: .prompt-tip }
 
 ## Garmin Connect IQ Store
 
-Publishing the application was quite straightforward if you compare it to a lot of other stores and platforms. Simply create an account, upload the application, update the store details and you're done.
+Publishing the application was quite straightforward if you compare it to a lot of others stores and platforms. Simply create an account, upload the application, update the store details and you're done.
 
-> The Garmin application is available on the Connect IQ Store here : [https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a
+> The Garmin application is available on the Connect IQ Store here : [https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a
 ](https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a).
 {: .prompt-tip }
-
