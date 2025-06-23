@@ -68,6 +68,9 @@ _Wireshark with the Xbox Controller Dissector_
 
 On my phone I launched nRF Connect to discover the BLE services and characteristics defined by the controller. I noticed it had a service called HID Report and guessed it was somehow using the HID protocol (designed for USB device) over BLE.
 
+
+// IMAGE nRF CONNECT
+
 After a quick search on internet, I found there is an official BLE profile called HID over GATT : https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/
 
 ### HID Protocol
@@ -80,6 +83,7 @@ The HID host determines how often the device should send data by periodically po
 
 ### HOG (HID over GATT)
 
+The HID over GATT profile is a way to use HID protocol over BLE. It is based on GATT (Generic Attribute Profile) and define an HID service with characteristic which are in turn based on the HID descriptors.
 
 # STM32CubeIDE setup
 
