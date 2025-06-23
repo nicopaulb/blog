@@ -21,7 +21,7 @@ _Mini handled game console_
 
 Now the goal of my next project was clear : create a similar handheld game console based on a STM32 microcontroller with a colorful screen and playable with a wireless Xbox Controller !
 
-# Communication with a Xbox Controller
+## Communication with a Xbox Controller
 
 The first goal of this project is to connect the Xbox controller to my NUCLEO-WB55 board. The two communicate via BLE, but an appropriate driver should be written for the microcontroller to realize the connection and parse the controller inputs. 
 
@@ -31,7 +31,7 @@ To do that I am helped by two software :
 - Wireshark on Windows/Linux, a network packet analysis software which can also capture and dissect BLE packets
 - nRF Connect on Android, a generic BLE tool to scan, advertise, and communicate with a device.
 
-## Analyzing BLE packets via Wireshark
+### Analyzing BLE packets via Wireshark
 
 By connecting the controller to my PC and intercepting the BLE packets between the two devices, I can see all the frame sent by the controller when I realize certain action (joystick moved, button pressed, trigger pushed, ...).
 
@@ -48,7 +48,7 @@ Once all the packets captured, I deduced the following table :
 ![Table of packets for each action](xbox_parse_table.png){: w="1000" h="700"}
 _Table of packets for each action_
 
-## Writing a Wireshark plugin
+### Writing a Wireshark plugin
 
 To check I didn't do any mistake and to better visualize the packet received, I developed a Wireshark dissector. Dissectors are meant to analyze some part of a packet's data and I choose to integrate one into Wireshark via a plugin.
 
@@ -64,7 +64,7 @@ _Wireshark with the Xbox Controller Dissector_
 
 > My Xbox controller dissector for Wireshark is available on Github : https://github.com/nicopaulb/xbox-wireshark-dissector/tree/main
 
-## Analyzing BLE profile via nRF Connect
+### Analyzing BLE profile via nRF Connect
 
 On my phone I launched nRF Connect to discover the BLE services and characteristics defined by the controller. I noticed it had a service called HID Report and guessed it was somehow using the HID protocol (designed for USB device) over BLE.
 
@@ -73,7 +73,7 @@ On my phone I launched nRF Connect to discover the BLE services and characterist
 
 After a quick search on internet, I found there is an official BLE profile called HID over GATT : https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/
 
-### HID Protocol
+#### HID Protocol
 
 The Human Interface Device (HID) protocol is a standard used by USB devices like keyboards, mice, game controllers, and touchscreens to communicate with an host system efficiently. This way the host operating system can include a built-in and standardized HID driver able to interpret any input devices.
 
@@ -81,10 +81,20 @@ During the device enumeration phase, a **HID descriptor** containing information
 
 The HID host determines how often the device should send data by periodically polling the device at a fixed interval for **input reports** (key presses, mouse movement, ...). The device can also receive **output reports** from the host to for example setting a LED indicators on a keyboard or enabling controller rumble. 
 
-### HOG (HID over GATT)
+#### HOG (HID over GATT)
 
 The HID over GATT profile is a way to use HID protocol over BLE. It is based on GATT (Generic Attribute Profile) and define an HID service with characteristic which are in turn based on the HID descriptors.
 
-# STM32CubeIDE setup
+## Writing code for STM32WB55
 
-# Display on the TFT ST7732 screen
+### STM32CubeIDE
+
+To start programming the STM32WB55, I used STM32CubeIDE.
+
+### Architecture
+
+
+### Display on the TFT ST7732 screen
+
+
+## PCB design
