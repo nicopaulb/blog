@@ -73,7 +73,7 @@ En plus d'offrir la coloration syntaxique et la complétion de code, elle facili
 
 ### Émulateur
 
-Le gestionnaire SDK est également fourni avec des émulateurs de périphériques permettant d'exécuter directement l'application depuis l'ordinateur.
+Le gestionnaire SDK est également fourni avec un émulateur d'appareil Garmin permettant d'exécuter directement l'application depuis l'ordinateur.
 Il est très pratique pour exécuter rapidement l'application sans avoir à l'installer sur la montre ou pour pouvoir la tester sur différentes montres.
 
 ![Émulateur Garmin](emulator.png){: w="300"}
@@ -82,38 +82,38 @@ _Émulateur Garmin_
 ## Application
 
 ### Architecture
-The application is quite simple, it fetchs the time of arrival of the next bus from the DeLijn Open Data Services API and displays a countdown on the watch.
-The countdown is updated every second and a new API request is made every minute or, if the refresh button is pressed, to correct the countdown if the bus is delayed or advanced. This way, the informations displayed are always up to date.
+L'application est assez simple, elle récupère l'heure d'arrivée du prochain bus à partir de l'API DeLijn Open Data Services et affiche un compte à rebours sur la montre.
+Le compte à rebours est mis à jour toutes les secondes et une nouvelle requête API est effectuée toutes les minutes ou, si l'on appuie sur le bouton d'actualisation, pour corriger le compte à rebours si le bus est retardé ou avancé. De cette manière, les informations affichées sont toujours à jour.
 
-![Architecture Diagram](schema.png){: w="300"}
-_Architecture Diagram_
+![Diagramme d'architecture](schema.png){: w="300"}
+Diagramme d'architecture
 
-### Settings
-In the settings, accessible from the Connect IQ application, you can select which bus stop and bus lines you want to track. You should also set your own DeLijn API key, so you don't have to worry about rate limits.
+### Paramètres
+Dans les paramètres, accessibles à partir de l'application Connect IQ, vous pouvez sélectionner les arrêts et les lignes de bus que vous souhaitez suivre. Vous devez également définir votre propre clé API DeLijn, afin de ne pas avoir à vous soucier des limites de requetes journalières.
 
-![Settings](settings.png){: w="200"}
-_Settings_
+![Paramètres](settings.png){: w="200"}
+Paramètres
 
-The API request interval can be changed as well. 
+L'intervalle des requêtes API peut également être modifié. 
 
 ### Interface
-The countdown (in minutes) to the next bus is displayed. The interface can shows up to two bus stop information, one on each line.
+Le compte à rebours (en minutes) jusqu'au prochain bus est affiché. L'interface peut afficher jusqu'à deux informations sur les arrêts de bus, un sur chaque ligne.
 
-The countdown color indicate if the estimated bus arrival time (based on the GPS position) is on schedule, late or early comparerly to the static timetable information :
-- <span style="color:purple;font-weight:bold">Purple</span> : Bus is estimated to arrive earlier than expected
-- <span style="color:green;font-weight:bold">Green</span>: Bus is on time.
-- <span style="color:red;font-weight:bold">Red</span> : Bus is estimated to arrive later than expected.
+La couleur du compte à rebours indique si l'heure d'arrivée estimée du bus (basée sur la position GPS) est à l'heure, en retard ou en avance par rapport aux informations statiques du planning :
+- <span style="color:purple;font-weight:bold">Mauve</span> : Le bus devrait arriver plus tôt que prévu.
+- <span style="color:green;font-weight:bold">Vert</span> : Le bus est à l'heure.
+- <span style="color:red;font-weight:bold">Red</span> : Le bus devrait arriver plus tard que prévu.
 
 ![Interface](interface.png){: w="200"}
 _Interface_
 
-> The code is available on Github here : [https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker](https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker).
+> Le code est disponible sur Github ici : [https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker](https://github.com/nicopaulb/Garmin-DeLijn-Bus-Tracker).
 {: .prompt-tip }
 
-## Garmin Connect IQ Store
+## Boutique Garmin Connect IQ
 
-Publishing the application was quite straightforward if you compare it to a lot of others stores and platforms. Simply create an account, upload the application, update the store details and you're done.
+La publication de l'application a été assez simple si vous la comparez à beaucoup d'autres plateformes. Il suffit de créer un compte, de télécharger l'application, de mettre à jour les détails de la boutique et le tour est joué.
 
-> The Garmin application is available on the Connect IQ Store here : [https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a
+> L'application Garmin est disponible sur le Connect IQ Store ici : [https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a
 ](https://apps.garmin.com/fr-FR/apps/1d2b5826-ae2e-4bb9-a6e7-76e3e6b1ef5a).
 {: .prompt-tip }
