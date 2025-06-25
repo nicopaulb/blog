@@ -12,7 +12,7 @@ image :
 
 Un an après mon dernier projet Bus Tracker pour les bus à Toulouse, j'ai déménagé en Belgique et j'ai décidé de créer un outil similaire, mais pour les montres Garmin.
 
-> If you want to learn more about my **Bus Tracker** project, you can read more about it [here]({% post_url en/2023-02-10-bustracker %}).
+> Si vous voulez en savoir plus sur mon projet **Bus Tracker**, clicker [ici]({% post_url fr/2023-02-10-bustracker %}).
 {: .prompt-tip }
 
 Je porte personnellement une Forunner 245 et j'ai toujours voulu pouvoir savoir exactement quand le bus allait venir me chercher.
