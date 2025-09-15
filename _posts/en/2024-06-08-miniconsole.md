@@ -85,7 +85,7 @@ The HID host determines how often the device should send data by periodically po
 
 The HID over GATT profile is a way to use HID protocol over BLE. It is based on GATT (Generic Attribute Profile) and define an HID service with characteristic which are in turn based on the HID descriptors.
 
-## Writing code for STM32WB55
+## STM32WB55 programming
 
 ### STM32CubeIDE
 
@@ -93,8 +93,15 @@ To start programming the STM32WB55, I used STM32CubeIDE.
 
 ### Architecture
 
+#### BLE stack
 
-### Display on the TFT ST7732 screen
+#### Application
+
+##### TFT display function
 
 
 ## PCB design
+
+- Designed a Nucleo-WB55 hat with the screen and a passive buzzer for sound. Convenient for protoype because can be directly plugged in the development board.
+- Used Fusion 360 design tool to create the necessary component schematic and footprints, create the PCB layout and route it.
+- Printed the PCB via JLPCB and soldered the components (heading pins, TFT display and passive buzzer).
