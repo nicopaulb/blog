@@ -95,9 +95,13 @@ To start programming the STM32WB55, I used STM32CubeIDE.
 
 #### BLE stack
 
-#### Application
+#### TFT display API
 
-##### TFT display function
+#### Menu and navigation
+
+#### Testing screen
+
+#### First game : Snake
 
 
 ## PCB design
