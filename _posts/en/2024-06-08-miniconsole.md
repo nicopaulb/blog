@@ -87,6 +87,8 @@ The HID host determines how often the device should send data by periodically po
 
 The **HID over GATT profile** is a way to use HID protocol over BLE. It is based on GATT (Generic Attribute Profile) and define an HID service with characteristic which are in turn based on the HID descriptors.
 
+This service has the necessary characteristics and descriptors to emit notifications whenever a controller button is pressed/unpressed.
+
 ## STM32WB55 programming
 
 ### STM32CubeIDE
@@ -130,9 +132,27 @@ sequenceDiagram
 ```
 <p style="color:#6d6c6c;font-size: 80%;text-align:center;">Connection and pairing sequence diagram</p>
 
-#### TFT display API
+- Used STCube Code Generator for basic example and then heavely customized it to fit my project
+- State machine to handle all asynchronous BLE event : 
+    - Scanning : Start a BLE scan to listen to all advertising frames from BLE closes devices, and try to find the one with the Complete Local Name set to 'Xbox Wireless Controller'
+    - Connection : Open a connection to the device found in the scanning step
+    - Pairing : Start pairing with the device, with MITM (man in the middle) and secure mode disabled
+    - Ready: Now the controller is paired, a new state machine is used to discover the required BLE services and characteristics to enable the battery and report notifications
+- HID_Report_t structure made from the Wireshark dissector to parse the HID report and have easy access to each buttons, joysticks and triggers values. The structure is updated at each new BLE report event received from the controller (whenever a button is pressed/unpressed)
+
+#### TFT ST7735 Display Driver
+
+- SPI 16 Mhz
+- Use ST HAL SPI API to transmit, blocking mode since 16 Mhz for a 160*128pixel screen is fast enough to never be the bottleneck in the software
+- At initialization, ST7735 registers are configured to be in landscape mode (X / Y axis, used for memory access), 16 bit color mode
+- Before sending date over SPI to change pixel value, address windows need to be set so the screen know which pixel it needs to update, without having to update the whole screen each time.
 
 #### Menu and navigation
+
+- Menu and naviguation handled through yet another state machine
+- Each screen have the same header bar with the current page name and the controller battery level
+- On start, the screen is updated with all the different connection step mentionned in BLE stack part
+- In menu arrow key are used to select an item and 'A' button to validate
 
 #### Testing screen
 
