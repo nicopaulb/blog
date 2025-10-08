@@ -24,6 +24,9 @@ _Mini handled game console_
 
 Now the goal of my next project was clear: create a similar handheld game console based on a **STM32 microcontroller** with a colorful screen and playable with a wireless **Xbox Controller**!
 
+![Nucleo WB55RG](nucleowb55.webp){: w="400" h="150"}
+_Nucleo WB55RG_
+
 ## Communication with a Xbox Controller
 
 The first goal of this project is to connect the Xbox controller to my **NUCLEO-WB55 board**. The two communicate via **BLE**, but an appropriate **driver** should be written for the microcontroller to realize the connection and parse the controller inputs.
