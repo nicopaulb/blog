@@ -25,6 +25,9 @@ _Mini console de jeux portable_
 
 L'objectif de mon prochain projet était désormais clair : créer une console de jeux portable similaire basée sur un **microcontrôleur STM32** avec un écran couleur et jouable avec une **manette Xbox** sans fil !
 
+![Nucleo WB55RG](nucleowb55.webp){: w="400" h="150"}
+_Nucleo WB55RG_
+
 ## Communication avec une manette Xbox
 
 Le premier objectif de ce projet est de connecter la manette Xbox à ma **carte NUCLEO-WB55**. Les deux communiquent via **BLE**, mais un **pilote** approprié doit être écrit pour le microcontrôleur afin de réaliser la connexion et d'analyser les entrées de la manette.
