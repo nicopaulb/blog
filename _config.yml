@@ -211,6 +211,7 @@ exclude:
   - "package*.json"
 
 jekyll-archives:
+  slug_mode: pretty
   enabled: [categories, tags]
   layouts:
     category: category
