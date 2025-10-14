@@ -15,7 +15,7 @@ Je cherchais une idée de projet pour tester ma nouvelle carte d'évaluation **N
 
 Je me suis également souvenu que j'avais dans mon stock un petit écran **OLED** inutilisé, acheté à l'origine pour mon projet **Bus Tracker**. J'ai pensé que ce serait une bonne occasion de tester également cet écran.
 
-> Si vous souhaitez en savoir plus sur mon projet **Bus Tracker**, vous pouvez le découvrir [ici]({% post_url fr/2023-02-10-bustracker %}).
+> Si vous souhaitez en savoir plus sur mon projet **Bus Tracker**, vous pouvez le découvrir [ici]({% post_url fr-FR/2023-02-10-bustracker %}).
 {: .prompt-tip }
 
 Ces mini-écrans me rappellent les mini-consoles de jeux portables bon marché qui étaient populaires quand j'étais enfant.
@@ -136,10 +136,10 @@ sequenceDiagram
 
   A <<->> B : Initialiser GATT & GAP
   alt Rechercher une manette Xbox
-    A ->>+ B : aci_gap_start_general_discovery_proc 
+    A ->>+ B : aci_gap_start_general_discovery_proc
     B ->> X : Démarrer le scan
     X ->> B : Publicité<br>(Nom local complet = Manette sans fil Xbox)
-    B ->> A : HCI_LE_ADVERTISING_REPORT_EVENT 
+    B ->> A : HCI_LE_ADVERTISING_REPORT_EVENT
     A ->> B : aci_gap_terminate_gap_proc
     B ->>- A : ACI_GAP_PROC_COMPLETE_EVENT
   end
@@ -151,7 +151,7 @@ sequenceDiagram
   end
   alt Liaison à la manette<br>(méthode « Just Work »)
     A ->> B : aci_gap_send_pairing_req
-    B ->> X : Demande d'appairage  
+    B ->> X : Demande d'appairage
     X ->> B : réponse d'appairage
     B ->> A : ACI_GAP_PAIRING_COMPLETE_EVENT
   end
@@ -245,20 +245,20 @@ typedef struct __attribute__((packed))
 #define HATSWITCH_LEFT          0x07
 #define HATSWITCH_UPLEFT        0x08
   uint8_t  : 4;
-  
+
 uint8_t  BTN_A : 1;
   uint8_t  BTN_B : 1;
   uint8_t  BTN_RightJoystick : 1;
   uint8_t  BTN_X : 1;
   uint8_t  BTN_Y : 1;
   uint8_t  BTN_BackLeft : 1;
-  
+
 uint8_t  BTN_BackRight : 1 ;
   uint8_t  : 2 ;
 uint8_t  BTN_View : 1 ;
 uint8_t  BTN_Menu : 1 ;
 uint8_t  BTN_Xbox : 1 ;
-  
+
 uint8_t  BTN_LeftJoystick : 1;
   uint8_t  : 2;
 uint8_t  BTN_Profile : 1;
@@ -285,11 +285,11 @@ void ST7735_FillRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16
   uint16_t line[ST7735_WIDTH] = {0};
   uint8_t pixel[] = { color >> 8, color & 0xFF };
   if((x >= ST7735_WIDTH) || (y >= ST7735_HEIGHT)) return;
-  
+
 if((x + w - 1) >= ST7735_WIDTH) w = ST7735_WIDTH - x;
   if((y + h - 1) >= ST7735_HEIGHT) h = ST7735_HEIGHT - y;
 ST7735_SELECT();
-  
+
 ST7735_SetAddressWindow(x, y, x+w-1, y+h-1);
   for(x = 0; x < w; ++x)
     memcpy(ligne + x, pixel, sizeof(pixel));
@@ -355,7 +355,7 @@ void Stage_Snake_Handle(HID_Report_t *report, uint8_t battery) {
   if (report->BTN_Xbox) {
     round_running = false;
     App_Set_Stage(STAGE_SNAKE_EXIT);
-  
+
 }
   if (round_running) {
     static long long last_tick = 0;
@@ -363,7 +363,7 @@ void Stage_Snake_Handle(HID_Report_t *report, uint8_t battery) {
     coord_t dir = get_direction(report);
     if (cur_tick - last_tick > BASE_TICK_TIME) {
       last_tick = cur_tick;
-      
+
 coord_t new_head = { head.x + dir.x, head.y + dir.y };
       // Vérification de collision
       if (is_wall_collided(&new_head) || is_body_collided(&new_head)) {
@@ -391,7 +391,7 @@ _Écran de fin de partie du jeu Snake_
 > La logique du jeu Snake est implémentée dans [stage_snake.c](https://github.com/nicopaulb/Miniconsole/blob/master/Core/Src/Application/stage_snake.c)
 {: .prompt-tip }
 
-Un court aperçu est disponible : 
+Un court aperçu est disponible :
 
 {% include embed/youtube.html id='HiKERqdBBBA' %}
 
@@ -408,11 +408,11 @@ static void Buzzer_Play_Tone(uint16_t frequency, uint16_t duration) {
   __HAL_TIM_SET_COUNTER(&BUZZER_TIM2_HANDLE, duration);
   if (frequency != 0) {
     __HAL_TIM_SET_PRESCALER(&BUZZER_TIM_HANDLE, TIMR_PRS(frequency));
-    
+
 HAL_TIM_PWM_Start(&BUZZER_TIM_HANDLE, TIM_CHANNEL_1);
   }
   __HAL_TIM_ENABLE_IT(&BUZZER_TIM2_HANDLE, TIM_IT_UPDATE);
-  
+
 __HAL_TIM_ENABLE(&BUZZER_TIM2_HANDLE);
 }
 ```
@@ -424,7 +424,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM2) {
     HAL_TIM_PWM_Stop(&BUZZER_TIM_HANDLE, TIM_CHANNEL_1);
     tone_id++;
-    
+
 if (tone_id < tone_buf.size) {
       Buzzer_Play_Tone(tone_buf.frequency[tone_id], tone_buf.duration[tone_id]);
     }
@@ -459,7 +459,7 @@ Pour ce projet, j'ai choisi de ne concevoir qu'un **hat** Nucleo-WB55, avec un �
 ### Disposition
 
 Le circuit imprimé a été conçu à l'aide de **Fusion 360** (anciennement Eagle), où j'ai créé les **schémas** et les **empreintes** nécessaires.
- 
+
 ![Schéma](electrical_schema.png){: w="400" h="400"}
 _Schéma_
 
