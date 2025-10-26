@@ -1,6 +1,6 @@
 ---
 title: "Retro handheld : Minimalist game console"
-description: "A STM32 board equiped with a mini OLED screen and a BLE Xbox Controller to recreate some old memories..."
+description: "A STM32 board equipped with a mini OLED screen and a BLE Xbox Controller to recreate some old memories..."
 date: 2025-09-20
 categories: [Embedded]
 tags: [ble, reverse, st, c]
