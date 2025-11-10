@@ -391,10 +391,6 @@ _Écran de fin de partie du jeu Snake_
 > La logique du jeu Snake est implémentée dans [stage_snake.c](https://github.com/nicopaulb/Miniconsole/blob/master/Core/Src/Application/stage_snake.c)
 {: .prompt-tip }
 
-Un court aperçu est disponible :
-
-{% include embed/youtube.html id='HiKERqdBBBA' %}
-
 #### Effet sonore
 
 Pour compléter l'affichage, j'ai ajouté des **effets sonores** basique à l'aide d'un **buzzer passif** connecté au microcontrôleur. Le buzzer est contrôlé via un **signal PWM** généré par l'un des **timers STM32**, ce qui permet de produire des sons simples à différentes fréquences.
@@ -482,6 +478,10 @@ Après le soudage, le chapeau a été monté directement sur la **carte Nucleo-W
 
 ![PCB monté](miniconsole_photo.jpg){: w="400" h="400"}
 _PCB monté sur le Nucleo_
+
+## Démo
+
+{% include embed/youtube.html id='HiKERqdBBBA' %}
 
 ## Améliorations futures
 
